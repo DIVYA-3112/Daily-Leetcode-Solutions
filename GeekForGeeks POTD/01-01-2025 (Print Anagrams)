@@ -1,0 +1,28 @@
+    vector<vector<string>> anagrams(vector<string>& arr) {
+        
+        int n = arr.size();
+        vector<int> vis(n,0);
+        vector<vector<string>> ans;
+        for(int i=0; i<n; i++)
+        {
+            if(vis[i]) continue;
+            unordered_map<char,int> mp1;
+            for(char c : arr[i]) mp1[c]++;
+            vector<string> temp;
+            // temp.push_back(arr[i]);
+            for(int j=0; j<n; j++)
+            {
+                if(vis[j]) continue;
+                unordered_map<char,int> mp2;
+                for(char c : arr[j]) mp2[c]++;
+                if(mp1 == mp2)
+                {
+                    temp.push_back(arr[j]);
+                    vis[j] = 1;
+                }
+            }
+            vis[i] = 1;
+            ans.push_back(temp);
+        }
+        return ans;
+    }
