@@ -1,0 +1,53 @@
+// GFG POTD
+// Problem Link - https://www.geeksforgeeks.org/problems/count-all-triplets-with-given-sum-in-sorted-array/1
+
+class Solution {
+  public:
+    int countTriplets(vector<int> &arr, int target) {
+        int n = arr.size();
+        int ans = 0;
+        for(int i=0; i<n-2; i++)
+        {
+            int left = i+1;
+            int right = n-1;
+            
+            while(right > left)
+            {
+                int sum = arr[i] + arr[left] + arr[right];
+                if(sum == target)
+                {
+                    if(arr[left] == arr[right])
+                    {
+                        int k = right - left + 1;
+                        ans += (k)*(k-1)/2;
+                        break;
+                    }
+                    else if(arr[left] != arr[right])
+                    {
+                        int lc = 0;
+                        int rc = 0;
+                        int l = arr[left];
+                        int r = arr[right];
+                        
+                        while(arr[left] == l)
+                        {
+                            lc++;
+                            left++;
+                        }
+                        
+                        while(arr[right] == r)
+                        {
+                            rc++;
+                            right--;
+                        }
+                        ans += (rc*lc);
+                    }
+                }
+                else if(sum < target) left++;
+                else right --;
+            }
+        }
+        
+        return ans;
+    }
+};
