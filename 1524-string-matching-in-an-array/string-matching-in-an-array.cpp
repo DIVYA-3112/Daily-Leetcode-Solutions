@@ -7,8 +7,6 @@ public:
     vector<string> stringMatching(vector<string>& words) {
         int n = words.size();
         sort(words.begin(), words.end(), fun);
-        for(auto& it : words) cout << it << " ";
-        cout << endl;
         vector<string> ans;
 
         for(int i=0; i<n; i++)
