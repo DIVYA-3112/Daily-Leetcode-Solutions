@@ -11,13 +11,13 @@ public:
 
         for(int i=0; i<n; i++)
         {
-            string s1 = words[i];
+            // string s1 = words[i];
             for(int j=i+1; j<n; j++)
             {
-                string s2 = words[j];
-                if(s2.find(s1) != string::npos)
+                // string s2 = words[j];
+                if(words[j].find(words[i]) != string::npos)
                 {
-                    ans.push_back(s1);
+                    ans.push_back(words[i]);
                     break;
                 }
             }
