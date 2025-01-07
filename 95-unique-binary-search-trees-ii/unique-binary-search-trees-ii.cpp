@@ -1,41 +1,35 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
-    vector<TreeNode*> fun(int l, int r)
-    {
-        if(l > r) return {NULL};
-        vector<TreeNode*> ans;
+    // DP table for memoization
+    vector<vector<vector<TreeNode*>>> dp;
 
-        for(int i=l; i<=r; i++)
-        {
-            vector<TreeNode*> left = fun(l,i-1);
-            vector<TreeNode*> right = fun(i+1,r);
+    vector<TreeNode*> generateTreesInRange(int l, int r) {
+        if (l > r) return {nullptr}; // Base case: empty tree
+        if (!dp[l][r].empty()) return dp[l][r]; // Return memoized result
 
-            for(auto l : left)
-            {
-                for(auto r : right)
-                {
+        vector<TreeNode*> result;
+        for (int i = l; i <= r; i++) {
+            // Generate all left and right subtrees
+            vector<TreeNode*> leftTrees = generateTreesInRange(l, i - 1);
+            vector<TreeNode*> rightTrees = generateTreesInRange(i + 1, r);
+
+            // Combine left and right subtrees with the current root `i`
+            for (TreeNode* left : leftTrees) {
+                for (TreeNode* right : rightTrees) {
                     TreeNode* root = new TreeNode(i);
-                    root->left = l;
-                    root->right = r;
-                    ans.push_back(root);
+                    root->left = left;
+                    root->right = right;
+                    result.push_back(root);
                 }
             }
         }
-        return ans;
+
+        return dp[l][r] = result; // Memoize and return
     }
+
     vector<TreeNode*> generateTrees(int n) {
-        vector<TreeNode*> ans = fun(1,n);
-        return ans;
+        if (n == 0) return {}; // Edge case
+        dp.resize(n + 1, vector<vector<TreeNode*>>(n + 1));
+        return generateTreesInRange(1, n);
     }
 };
