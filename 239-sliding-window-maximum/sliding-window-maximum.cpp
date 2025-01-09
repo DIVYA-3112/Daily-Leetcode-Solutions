@@ -1,27 +1,23 @@
-#define pii pair<int,int>
-
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int> dq;
         vector<int> ans;
-        priority_queue<pii> pq;
         int n = nums.size();
 
-        for(int i=0; i<k-1; i++)
+        for(int i=0; i<n; i++)
         {
-            pq.push({nums[i], i});
-        }
-
-        for(int i=k-1; i<n; i++)
-        {
-            while(!pq.empty() && i - pq.top().second >= k)
+            if(!dq.empty() && i-dq.front() == k)
             {
-                pq.pop();
+                dq.pop_front();
             }
-            pq.push({nums[i],i});
-            ans.push_back(pq.top().first);
 
-
+            while(!dq.empty() && nums[i] > nums[dq.back()])
+            {
+                dq.pop_back();
+            }
+            dq.push_back(i);
+            if(i>=k-1) ans.push_back(nums[dq.front()]);
         }
         return ans;
     }
