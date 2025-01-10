@@ -23,11 +23,11 @@ public:
         {
             if(maxfreq[i] != 0)
             {
-                cout << (char)(i + 'a') << " - " << maxfreq[i] << endl;
+                // cout << (char)(i + 'a') << " - " << maxfreq[i] << endl;
                 cnt += maxfreq[i]; 
             }
         }
-        cout << "cnt - " << cnt << endl;
+        // cout << "cnt - " << cnt << endl;
 
         // return {""};
         vector<string> ans;
