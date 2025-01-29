@@ -30,7 +30,6 @@ public:
                         auto it = q.front();
                         int r = it.first;
                         int c = it.second;
-                        // cout << r << " " << c << endl;
                         q.pop();
 
                         for(int k=0; k<4; k++)
