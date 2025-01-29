@@ -30,7 +30,7 @@ public:
                         auto it = q.front();
                         int r = it.first;
                         int c = it.second;
-                        cout << r << " " << c << endl;
+                        // cout << r << " " << c << endl;
                         q.pop();
 
                         for(int k=0; k<4; k++)
@@ -46,7 +46,7 @@ public:
                             }
                         }
                     }
-                    cout << "Temp - " << temp << endl;
+                    // cout << "Temp - " << temp << endl;
 
                     ans = max(temp, ans);
                 }
