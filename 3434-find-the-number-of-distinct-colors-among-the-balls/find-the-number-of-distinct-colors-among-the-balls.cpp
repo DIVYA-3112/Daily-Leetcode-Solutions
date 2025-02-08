@@ -1,7 +1,6 @@
 class Solution {
 public:
     vector<int> queryResults(int limit, vector<vector<int>>& q) {
-        unordered_set<int> st;
         unordered_map<int,int> cnt;
         unordered_map<int,int> col;
 
@@ -17,12 +16,11 @@ public:
             {
                 cnt[col[ball]]--;
                 if(cnt[col[ball]] == 0)
-                    st.erase(col[ball]);
+                    cnt.erase(col[ball]);
             }
             col[ball] = color;
             cnt[col[ball]]++;
-            st.insert(color);
-            ans.push_back(st.size());
+            ans.push_back(cnt.size());
         }
 
         return ans;
