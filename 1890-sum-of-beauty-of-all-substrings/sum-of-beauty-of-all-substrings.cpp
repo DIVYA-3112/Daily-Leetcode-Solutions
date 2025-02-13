@@ -3,19 +3,32 @@ public:
     int beautySum(string s) {
         int n = s.size();
         int ans = 0;
-
-        for(int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             unordered_map<char, int> mp;
-            for(int j = i; j < n; j++) {
+            char maxi = s[i], mini = s[i];
+            mp[s[i]]++;
+
+            for (int j = i + 1; j < n; j++) {
                 mp[s[j]]++;
 
-                // Find max and min frequency in the current substring
-                int maxi = 0, mini = INT_MAX;
-                for(auto& [ch, freq] : mp) {
-                    maxi = max(maxi, freq);
-                    mini = min(mini, freq);
+                // Update `maxi` correctly
+                if (mp[s[j]] >= mp[maxi]) {
+                    maxi = s[j];
                 }
-                ans += (maxi - mini);
+
+                // Instead of relying on direct comparison, recalculate `mini`
+                if (mp[s[j]] <= mp[mini]) {
+                    mini = s[j];
+                }
+
+                // Ensure `mini` holds the correct least frequency character
+                for (auto& [ch, freq] : mp) {
+                    if (freq < mp[mini]) {
+                        mini = ch;
+                    }
+                }
+
+                ans += (mp[maxi] - mp[mini]);
             }
         }
         return ans;
