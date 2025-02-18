@@ -4,7 +4,7 @@ public:
     bool fun(string s, string &ans, int n, int ind, int last, vector<int>& vis)
     {
         if(ind == n+1) return true;
-        cout << ans << endl;
+        // cout << ans << endl;
 
         if(s[ind-1] == 'I')
         {
