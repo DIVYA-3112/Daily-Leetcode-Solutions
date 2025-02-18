@@ -1,8 +1,9 @@
 class Solution {
 public:
 
-    bool fun(string s, string &ans, int n, vector<int>& vis)
+    bool fun(string s, string &ans, vector<int>& vis)
     {
+        int n = s.size();
         int ind = ans.size();
         int last = ans[ind-1] - '0';
         if(ind == n+1) return true;
@@ -15,7 +16,7 @@ public:
                 {
                     vis[i] = 1;
                     ans += (char)(i + '0');
-                    if(fun(s, ans, n, vis)) return true;
+                    if(fun(s, ans, vis)) return true;
                     ans = ans.substr(0,ind);
                     vis[i] = 0;
                 }
@@ -29,7 +30,7 @@ public:
                 {
                     vis[i] = 1;
                     ans += (char)(i + '0');
-                    if(fun(s, ans, n, vis)) return true;
+                    if(fun(s, ans, vis)) return true;
                     ans = ans.substr(0,ind);
                     vis[i] = 0;
                 }
@@ -46,7 +47,7 @@ public:
         {
             vis[i] = 1;
             ans += (char)(i + '0');
-            if(fun(s,ans,n,vis)) return ans;
+            if(fun(s,ans,vis)) return ans;
             ans = ans.substr(0,0);
             vis[i] = 0;
         }
