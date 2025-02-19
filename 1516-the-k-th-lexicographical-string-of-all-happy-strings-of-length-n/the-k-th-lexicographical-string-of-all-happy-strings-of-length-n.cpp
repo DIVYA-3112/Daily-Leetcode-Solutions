@@ -3,7 +3,7 @@ public:
 
     void fun(int n, int &k, string &ans, string &s, int last)
     {
-        cout << s << endl;
+        // cout << s << endl;
         int len = s.size();
         if(s.size() == n)
         {
