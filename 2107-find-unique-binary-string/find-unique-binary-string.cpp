@@ -37,11 +37,6 @@ public:
             mp[k] = 1;
         }
 
-        for(auto it : mp)
-        {
-            cout << it.first << " - " << it.second << endl;
-        }
-
         for(int i=0; i<n+1; i++)
         {
             if(mp.find(i) == mp.end())
@@ -49,7 +44,6 @@ public:
                 return fun2(i,n);
             }
         }
-
         return "0";
     }
 };
