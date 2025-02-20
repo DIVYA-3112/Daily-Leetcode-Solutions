@@ -17,7 +17,7 @@ public:
             {
                 if(ans[ind] == 0 && (ind+i) < len && ans[ind+i] == 0)
                 {
-                    cout << ind << " - " << i << endl;
+                    // cout << ind << " - " << i << endl;
                     vis[i] = 1;
                     ans[ind] = i;
                     ans[ind+i] = i;
@@ -29,7 +29,6 @@ public:
             }
             else if(vis[i] == 0 && i == 1 && ans[ind] == 0)
             {
-                cout << ind << " - " << i << endl;
                 vis[i] = 1;
                 ans[ind] = 1;
                 if(fun(n, len, vis, ans, ind+1)) return true;
