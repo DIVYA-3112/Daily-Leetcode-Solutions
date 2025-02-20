@@ -16,14 +16,10 @@ public:
     string fun2(int i, int n)
     {
         string s = "";
-        while(i)
+        while(i || s.size() < n)
         {
             s += (char)((i % 2) + '0');
             i /= 2;
-        }
-        while(s.size() < n)
-        {
-            s += "0";
         }
         reverse(s.begin(), s.end());
         return s;
