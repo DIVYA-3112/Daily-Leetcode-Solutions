@@ -7,26 +7,15 @@ public:
         int cnt = 0;
         for(int i=0; i<n; i++)
         {
-            if(mp.find(A[i]) == mp.end())
-            {
-                mp[A[i]] = 1;
-            }
-            else
-            {
-                cnt++;
-            }
+            mp[A[i]] += 1;
+            if(mp[A[i]] == 2) cnt++;
 
-            if(mp.find(B[i]) == mp.end())
-            {
-                mp[B[i]] = 1;
-            }
-            else
-            {
-                cnt++;
-            }
-
+            mp[B[i]] += 1;
+            if(mp[B[i]] == 2) cnt++;
+            
             ans[i] = cnt;
         }
+        
         return ans;
     }
 };
