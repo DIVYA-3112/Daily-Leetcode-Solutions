@@ -16,32 +16,35 @@ public:
     int lenLongestFibSubseq(vector<int>& arr) {
         int n = arr.size();
         int ans = 0;
+        int cnt = 0;
         for(int i=0; i<n; i++)
         {
-            vector<int> v;
-            v.push_back(arr[i]);
+            int a = arr[i];
+            cnt++;
             for(int j=i+1; j<n; j++)
             {
-                v.push_back(arr[j]);
-                // cout << "i - " << i << "j - " << j << endl;
+                int b = arr[j];
+                cnt++;
                 while(true)
                 {
-                    int s = v.size();
-                    int req = v[s-1] + v[s-2];
+                    int req = a + b;
                     int chk = bs(req, n, arr);
-                    // cout << "chk - " << chk << endl;
                     if(chk == -1)
                     {
-                        ans = max(ans, s);
-                        v = {arr[i]};
+                        ans = max(ans, cnt);
+                        cnt = 1;
+                        a = arr[i];
                         break;
                     }
                     else
                     {
-                        v.push_back(arr[chk]);
+                        a = b;
+                        b = arr[chk];
+                        cnt++;
                     }
                 }
             }
+            cnt = 0;
         }
         return (ans > 2) ? ans : 0;
 
