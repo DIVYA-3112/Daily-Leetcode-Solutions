@@ -2,7 +2,7 @@ class Solution {
 public:
     vector<long long> findMaxSum(vector<int>& nums1, vector<int>& nums2, int k) {
         int n = nums1.size();
-        map<int,vector<int>> mp;
+        unordered_map<int,vector<int>> mp;
         vector<long long> ans(n,0);
         for(int i=0; i<n; i++)
         {
@@ -11,10 +11,17 @@ public:
 
         priority_queue<int, vector<int>, greater<int>> pq;
         long long sum = 0;
-        for(auto it : mp)
+        vector<int> uk;
+        for(auto &[key, _] : mp)
+        {
+            uk.push_back(key);
+        }
+        sort(uk.begin(), uk.end());
+        int t = uk.size();
+        for(int it=0; it<t; it++)
         {
             long long oldsum = sum;
-            for(int i : it.second)
+            for(int i : mp[uk[it]])
             {
                 ans[i] = oldsum;
                 int temp = nums2[i];
