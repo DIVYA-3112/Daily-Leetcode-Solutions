@@ -1,44 +1,42 @@
+
 class Solution {
 public:
     vector<long long> findMaxSum(vector<int>& nums1, vector<int>& nums2, int k) {
         int n = nums1.size();
-        unordered_map<int,vector<int>> mp;
-        vector<long long> ans(n,0);
-        for(int i=0; i<n; i++)
-        {
-            mp[nums1[i]].push_back(i);
+        vector<pair<int, pair<int, int>>> vec(n);
+        
+        for (int i = 0; i < n; i++) {
+            vec[i] = {nums1[i], {i, nums2[i]}};
         }
-
-        priority_queue<int, vector<int>, greater<int>> pq;
-        long long sum = 0;
-        vector<int> uk;
-        for(auto &[key, _] : mp)
-        {
-            uk.push_back(key);
-        }
-        sort(uk.begin(), uk.end());
-        int t = uk.size();
-        for(int it=0; it<t; it++)
-        {
-            long long oldsum = sum;
-            for(int i : mp[uk[it]])
-            {
-                ans[i] = oldsum;
-                int temp = nums2[i];
-                if(pq.size() == k && pq.top() < temp)
-                {
-                    sum -= pq.top();
+        
+        sort(vec.begin(), vec.end());
+        
+        priority_queue<long long, vector<long long>, greater<long long>> pq;
+        long long currSum = 0;
+        vector<long long> ans(n);
+        
+        for (int i = 0; i < n; i++) {
+            int currNum = vec[i].first;
+            int j = i;
+            
+            while (j < n && vec[j].first == currNum) {
+                ans[vec[j].second.first] = currSum;
+                j++;
+            }
+            
+            for (int l = i; l < j; l++) {
+                pq.push(vec[l].second.second);
+                currSum += vec[l].second.second;
+                
+                if (pq.size() > k) {
+                    currSum -= pq.top();
                     pq.pop();
-                    pq.push(temp);
-                    sum += temp;
-                }
-                else if(pq.size() < k)
-                {
-                    sum += temp;
-                    pq.push(temp);
                 }
             }
+            
+            i = j - 1;
         }
+        
         return ans;
     }
 };
