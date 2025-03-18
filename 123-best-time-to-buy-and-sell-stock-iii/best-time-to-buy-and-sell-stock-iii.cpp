@@ -17,19 +17,12 @@ public:
         if(dp[ind][cnt] != -1) return dp[ind][cnt];
 
         // conditions;
-        int ans;
-        if(cnt%2 == 0)
-        {
-            int buyd = fun(arr, ind+1, cnt-1, dp) - arr[ind];
-            int buynd = fun(arr, ind+1, cnt, dp);
-            ans = max(buyd, buynd);
-        }
-        else
-        {
-            int selld = fun(arr, ind+1, cnt-1, dp) + arr[ind];
-            int sellnd = fun(arr, ind+1, cnt, dp);
-            ans = max(selld, sellnd);
-        }
+        int temp =1;
+        if(cnt % 2 == 0) temp = -1;
+
+        int done = fun(arr, ind+1, cnt-1, dp) + (temp * arr[ind]);
+        int notdone = fun(arr, ind+1, cnt, dp);
+        int ans = max(done, notdone);
         return dp[ind][cnt] = ans;
     }
     int maxProfit(vector<int>& prices) {
