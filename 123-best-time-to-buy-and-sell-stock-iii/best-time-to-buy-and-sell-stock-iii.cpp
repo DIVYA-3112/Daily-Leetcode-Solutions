@@ -27,10 +27,12 @@ public:
     }
     int maxProfit(vector<int>& arr) {
         int n = arr.size();
-        vector<vector<int>> dp(n, vector<int> (5, 0));
+        // vector<vector<int>> dp(n, vector<int> (5, 0));
+        vector<int> prev(5,0), curr(5,0);
+
         // base cases
-        dp[n-1][1] = arr[n-1];
-        dp[n-1][3] = arr[n-1];
+        prev[1] = arr[n-1];
+        prev[3] = arr[n-1];
 
         for(int ind=n-2; ind>=0; ind--)
         {
@@ -39,13 +41,14 @@ public:
                 int temp = 1;
                 if(cnt % 2 == 0) temp = -1;
 
-                int done = dp[ind+1][cnt-1] + (temp * arr[ind]);
-                int notdone = dp[ind+1][cnt];
-                dp[ind][cnt] = max(done, notdone);
+                int done = prev[cnt-1] + (temp * arr[ind]);
+                int notdone = prev[cnt];
+                curr[cnt] = max(done, notdone);
             }
+            prev = curr;
         }
 
-        return dp[0][4];
+        return prev[4];
 
         // return fun(arr, 0, 4, dp);
     }
