@@ -1,74 +1,59 @@
-class DSU
-{
-    vector<int> rank;
-    vector<int> par;
-    public :
-    DSU(int n)
-    {
-        rank.resize(n);
-        par.resize(n);
-
-        for(int i=0; i<n; i++) par[i] = i;
-    }
-
-    int findPar(int u)
-    {
-        if(par[u] != u) 
-        {
-            return par[u] = findPar(par[u]);
-            // return par[u];
-        }
-        else return u;
-    }
-
-    void Union(int u, int v)
-    {
-        int pu = findPar(u);
-        int pv = findPar(v);
-
-        if(pu == pv) return;
-
-        if(rank[pu] > rank[pv])
-        {
-            par[pv] = pu;
-        }
-        else if(rank[pu] < rank[pv])
-        {
-            par[pu] = pv;
-        }
-        else
-        {
-            par[pu] = pv;
-            rank[pv] += 1;
-        }
-        return;
-    }
-};
-
 class Solution {
 public:
     vector<int> minimumCost(int n, vector<vector<int>>& edges, vector<vector<int>>& queries) {
         int q = queries.size();
         vector<vector<pair<int,int>>> adj(n);
-        vector<unsigned int> cc(n, -1); 
         int e = edges.size();
-
-        DSU dsu(n);
 
         for(int i=0; i<e; i++)
         {
             int u = edges[i][0];
             int v = edges[i][1];
+            int wt = edges[i][2];
 
-            dsu.Union(u,v);
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
         }
 
-        for(int i=0; i<e; i++)
+        // <component id -> bitwise AND;
+        unordered_map<int,int> mp;
+        vector<int> vis(n,0);
+        vector<int> cid(n,0);
+        int id = 1;
+        for(int i=0; i<n; i++)
         {
-            int u = edges[i][0];
-            int wt = edges[i][2];
-            int pu = dsu.findPar(u);
-            cc[pu] = (cc[pu] & wt);
+            // int cost = INT_MAX;
+            if(!vis[i])
+            {
+                vis[i] = 1;
+                cid[i] = id;
+                unsigned int cost = INT_MAX;
+
+                queue<int> q;
+                q.push(i);
+
+                while(!q.empty())
+                {
+                    int v = q.front();
+                    
+                    q.pop();
+
+                    for(auto it : adj[v])
+                    {
+                        int v = it.first;
+                        int wt = it.second;
+                        cost = (cost & wt);
+                        if(!vis[v])
+                        {
+                            q.push(v);
+                            vis[v] = 1;
+                            cid[v] = id;
+                        }
+                    }
+                }
+                mp[id] = cost;
+                id++;
+            }
         }
         vector<int> ans(q,0);
 
@@ -77,18 +62,14 @@ public:
             int u = queries[i][0];
             int v = queries[i][1];
 
-            int pu = dsu.findPar(u);
-            int pv = dsu.findPar(v);
-
-            if(pu != pv)
+            if(cid[u] != cid[v])
             {
                 ans[i] = -1;
                 // continue;
             }
             else
             {
-                int pu = dsu.findPar(u);
-                ans[i] = cc[pu];
+                ans[i] = mp[cid[u]];
             }
         }
         return ans;
