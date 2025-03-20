@@ -52,14 +52,6 @@ public:
         vector<vector<pair<int,int>>> adj(n);
         vector<unsigned int> cc(n, -1); 
         int e = edges.size();
-        for(int i=0; i<e; i++)
-        {
-            int u = edges[i][0];
-            int v = edges[i][1];
-            int wt = edges[i][2];
-
-            adj[u].push_back({v,wt});
-        }
 
         DSU dsu(n);
 
