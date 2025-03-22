@@ -63,14 +63,12 @@ public:
             st.insert(dsu.par[i]);
         }
         int ans = 0;
-        // vector<int> vis(n,0);
         vector<int> v(st.begin(), st.end());
         for(int i=0; i<v.size(); i++)
         {
             int k = v[i];
             int len = adj[k].size();
             bool flag = true;
-            int cnt = 0;
             vector<int> vis(n,0);
             vis[k] = 1;
             for(auto it : adj[k])
@@ -79,7 +77,6 @@ public:
             }
             for(auto it : adj[k])
             {
-                cnt++;
                 if(adj[it].size() != len)
                 {
                     flag = false;
@@ -94,13 +91,8 @@ public:
                     }
                 }
             }
-            if(flag)
-            {
-                if(len == cnt) ans++;
-            }
+            if(flag) ans++;
         }
         return ans;
-
-        // union find;
     }
 };
