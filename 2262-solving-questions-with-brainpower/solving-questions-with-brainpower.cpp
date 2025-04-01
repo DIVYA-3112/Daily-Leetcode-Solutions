@@ -18,7 +18,7 @@ public:
     }
     long long mostPoints(vector<vector<int>>& que) {
         int n = que.size();
-        vector<long long> dp(n+1, -1);
+        vector<long long> dp(n, -1);
         return fun(que, 0, dp);
     }
 };
