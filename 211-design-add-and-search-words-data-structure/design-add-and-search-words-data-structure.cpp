@@ -10,7 +10,6 @@ public:
     }
     
     void addWord(string word) {
-        // insert word
         WordDictionary* temp = this;
         int n = word.size();
         for(int i=0; i<n; i++)
