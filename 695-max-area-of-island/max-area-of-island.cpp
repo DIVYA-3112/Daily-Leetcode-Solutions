@@ -6,35 +6,21 @@ public:
         return (r >= 0 && c >= 0 && r < m && c < n);
     }
 
-    int bfs(vector<vector<int>> &grid, vector<vector<int>> &vis, int r, int c)
+    int dfs(vector<vector<int>> &grid, vector<vector<int>> &vis, int r, int c)
     {
-        int area = 0;
         int m = grid.size();
         int n = grid[0].size();
-
-        queue<pair<int,int>> q;
-        q.push({r,c});
-        
-        int dir[4][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
         vis[r][c] = 1;
-        
-        while(!q.empty())
+        int area = 1;
+
+        int dir[4][2] = {{0,1}, {0,-1}, {1,0}, {-1,0}};
+        for(auto [rd, cd] : dir)
         {
-            auto [r,c] = q.front();
-            q.pop();
-            area++;
-
-
-            for(auto [rd,cd] : dir)
+            int nr = r + rd;
+            int nc = c + cd;
+            if(check(nr,nc,m,n) && grid[nr][nc] == 1 && vis[nr][nc] == 0)
             {
-                int nr = r + rd;
-                int nc = c + cd;
-
-                if(check(nr,nc,m,n) && grid[nr][nc] == 1 && vis[nr][nc] == 0)
-                {
-                    q.push({nr,nc});
-                    vis[nr][nc] = 1;
-                }
+                area += dfs(grid,vis,nr,nc);
             }
         }
         return area;
@@ -50,8 +36,7 @@ public:
             {
                 if(grid[i][j] == 1 && vis[i][j] == 0)
                 {
-                    int area = bfs(grid,vis,i,j);
-                    cout << area << endl;
+                    int area = dfs(grid,vis,i,j);
                     ans = max(area, ans);
                 }
             }
