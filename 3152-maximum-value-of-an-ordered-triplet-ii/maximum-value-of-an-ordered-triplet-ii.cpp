@@ -5,11 +5,6 @@ public:
         vector<int> diff(n-1, 0);
         vector<int> arr(n,0);
 
-        for(int i=0; i<n-1; i++)
-        {
-            diff[i] = (nums[i] - nums[i+1]);
-        }
-
         arr[n-1] = nums[n-1];
         for(int i=n-2; i>=0; i--)
         {
@@ -21,7 +16,7 @@ public:
         long long ans = 0;
         for(int i=0; i<n-2; i++)
         {
-            maxdiff += diff[i];
+            maxdiff += (nums[i] - nums[i+1]);
             maxdiff = max(0, maxdiff);
 
             long long temp = maxdiff * (long long)arr[i+2];
