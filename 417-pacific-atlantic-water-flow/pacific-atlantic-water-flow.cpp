@@ -46,18 +46,6 @@ public:
             }
         }
 
-        for(int i=0; i<m; i++)
-        {
-            for(int j=0; j<n; j++)
-            {
-                cout << vis[i][j] << " ";
-                // if(vis[i][j] == 3) ans.push_back({i,j});
-            }
-            cout << endl;
-        }
-        cout << "------------" << endl;
-        // atlantic ocean
-
         for(int i=0; i<n; i++)
         {
             q.push({m-1,i});
@@ -94,10 +82,8 @@ public:
         {
             for(int j=0; j<n; j++)
             {
-                cout << vis[i][j] << " ";
                 if(vis[i][j] >= 3) ans.push_back({i,j});
             }
-            cout << endl;
         }
         return ans;
     }
