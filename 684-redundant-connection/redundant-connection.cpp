@@ -1,46 +1,42 @@
 class DSU
 {
-    private :
-    vector<int> rank,parent;
-
     public : 
+    vector<int> rank;
+    vector<int> par;
     DSU(int n)
     {
-        rank.resize(n+1,0);
-        parent.resize(n+1);
-
-        for(int i=0; i<n; i++)
-        {
-            parent[i] = i;
-        }
+        rank.resize(n+1);
+        par.resize(n+1);
+        for(int i=0; i<=n; i++) par[i] = i;
     }
 
-    int find(int x)
+    bool uni(int u, int v)
     {
-        if(parent[x] == x) return x;
-        return parent[x] = find(parent[x]);
-    }
+        int pu = findpar(u);
+        int pv = findpar(v);
 
-    void join(int u, int v)
-    {
-        int pu = parent[u];
-        int pv = parent[v];
-
-        if(pu == pv) return;
+        if(pu == pv) return false;
 
         if(rank[pu] > rank[pv])
         {
-            parent[pv] = pu; 
+            par[pv] = pu;
         }
-        else if(rank[pv] > rank[pu])
+        else if(rank[pu] < rank[pv])
         {
-            parent[pu] = pv;
+            par[pu] = pv;
         }
         else
         {
-            parent[pu] = pv;
-            rank[pv]++;
+            rank[pu]++;
+            par[pv] = pu;
         }
+        return true;
+    }
+
+    int findpar(int u)
+    {
+        if(u == par[u]) return u;
+        return par[u] = findpar(par[u]);
     }
 };
 
@@ -49,17 +45,12 @@ public:
     vector<int> findRedundantConnection(vector<vector<int>>& edges) {
         int n = edges.size();
         DSU dsu(n);
-
         for(int i=0; i<n; i++)
         {
             int u = edges[i][0];
             int v = edges[i][1];
-
-            if(dsu.find(u) == dsu.find(v)) return edges[i];
-
-            dsu.join(u,v);
+            if(!dsu.uni(u,v)) return {u,v};
         }
-
-        return {-1};
+        return {0,0};
     }
 };
