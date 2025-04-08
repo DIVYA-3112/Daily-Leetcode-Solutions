@@ -12,7 +12,7 @@ public:
         int ans = 0;
         while(mp.size() < n && n >= 3)
         {
-            cout << mp.size() << " " << n << endl;
+            // cout << mp.size() << " " << n << endl;
             n -= 3;
             for(int k=0; k<3; k++)
             {
@@ -22,7 +22,7 @@ public:
             i += 3;
             ans++;
         }
-        cout << mp.size() << " " << n << endl;
+        // cout << mp.size() << " " << n << endl;
 
         if(mp.size() == n) return ans;
         return ans+1;
