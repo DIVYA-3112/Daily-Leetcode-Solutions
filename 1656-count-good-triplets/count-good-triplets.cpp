@@ -7,13 +7,14 @@ public:
         {
             for(int j=i+1; j<n; j++)
             {
+                int a1 = abs(arr[i] - arr[j]);
+                if(a1 > a) continue;
                 for(int k=j+1; k<n; k++)
                 {
-                    int a1 = abs(arr[i] - arr[j]);
                     int a2 = abs(arr[k] - arr[j]);
                     int a3 = abs(arr[i] - arr[k]);
 
-                    if(a1 <= a && a2 <= b && a3 <= c) cnt++;
+                    if(a2 <= b && a3 <= c) cnt++;
                 }
             }
         }
