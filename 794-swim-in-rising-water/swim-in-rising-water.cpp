@@ -22,6 +22,7 @@ public:
             int r = it.second.first;
             int c = it.second.second;
             ans = max(ans, dep);
+            if(r == n-1 && c == n-1) return ans;
             pq.pop();
 
             for(auto [dr,dc] : dirs)
@@ -32,7 +33,7 @@ public:
                 if(check(nr,nc,n) && !vis[nr][nc])
                 {
                     vis[nr][nc] = 1;
-                    if(nr == (n-1) && nc == (n-1)) return ans = max(ans, grid[nr][nc]);
+                    // if(nr == (n-1) && nc == (n-1)) return ans = max(ans, grid[nr][nc]);
                     pq.push({grid[nr][nc],{nr,nc}});
                 }
             }
