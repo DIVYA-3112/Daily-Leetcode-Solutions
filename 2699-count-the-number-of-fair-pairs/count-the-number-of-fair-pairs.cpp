@@ -64,7 +64,6 @@ public:
             {
                 if(i >= i1) i1 = i + 1;
                 ans += i2 - i1 + 1;
-                cout << ans << " ";
             }
         }
         return ans;
